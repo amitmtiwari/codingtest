@@ -8,22 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PromotionEngine {
 
-    Map<String, Integer> skuPriceMap = new HashMap<>();
-    List<PromotionObject> promotionList = new ArrayList<>();
-
-    {
-        skuPriceMap.put("A",50);
-        skuPriceMap.put("B",30);
-        skuPriceMap.put("C",20);
-        skuPriceMap.put("D",15);
-
-        PromotionObject promotionObject = new PromotionObject("A",3,false, "",130);
-        PromotionObject promotionObject1 = new PromotionObject("B", 2,false, "",45);
-        promotionList.add(promotionObject);
-        promotionList.add(promotionObject1);
-    }
-
-    public Integer calculateOrderValue(Map<String, Integer> checkoutSKUs, List<PromotionObject> promotionList) {  //Input is SKU Id's and its count
+    public Integer calculateOrderValue(Map<String, Integer> checkoutSKUs, List<PromotionObject> promotionList, Map<String, Integer> skuPriceMap) {  //Input is SKU Id's and its count
 
         List<PromotionObject> forGroupedPromotionalObject = new ArrayList<>();
         AtomicReference<Integer> totalPrice = new AtomicReference<>(0);
@@ -70,30 +55,5 @@ public class PromotionEngine {
     private PromotionObject checkOffer(String sku,List<PromotionObject> promotionList) {
         PromotionObject promotionObject = promotionList.stream().filter(u -> u.getSkuId().contains(sku)).findFirst().orElse(null);
         return promotionObject;
-    }
-
-    public static void main(String[] args) {
-        Map<String, Integer> testData = new HashMap<>();
-        testData.put("A",1);
-        testData.put("B",1);
-        testData.put("C", 1);
-        PromotionEngine promotionEngine = new PromotionEngine();
-        /*Integer totalCost = promotionEngine.calculateOrderValue(testData);
-        System.out.println("Total Cost of SKU's is "+totalCost);*/
-
-       /*Map<String, Integer> testData1 = new HashMap<>();
-        testData1.put("A",5);
-        testData1.put("B",5);
-        testData1.put("C", 1);
-        Integer totalCost1 =  promotionEngine.calculateOrderValue(testData1);
-        System.out.println("Total Cost of SKU's is "+totalCost1);
-
-        Map<String, Integer> testData2 = new HashMap<>();
-        testData2.put("A",3);
-        testData2.put("B",5);
-        testData2.put("C", 1);
-        testData2.put("D", 1);
-        Integer totalCost2 =  promotionEngine.calculateOrderValue(testData2);
-        System.out.println("Total Cost of SKU's is "+totalCost2);*/
     }
 }
